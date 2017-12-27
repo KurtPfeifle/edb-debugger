@@ -110,7 +110,6 @@ after_success:
       #- bash upload.sh ./build/edb-qt$QT_BASE-continuous-git.$(git rev-parse --short HEAD)-x86_64.AppImage  # Needs Travis token of @eteran!
       #- bash upload.sh ./build/edb-qt$QT_BASE-continuous-git.$(git rev-parse --short HEAD)-x86_64.AppImage.zsync
 
-after_success:
 
 branches:
     only:
