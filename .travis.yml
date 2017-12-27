@@ -60,7 +60,11 @@ after_success:
     - mkdir -p ./appdir/usr/share/applications/ ; cp ./appimage/edb.desktop ./appdir/usr/share/applications/
     - mkdir -p ./appdir/usr/share/icons/hicolor/512x512/apps/ ; cp ./appimage/edb.png  ./appdir/usr/share/icons/hicolor/512x512/apps/
     - mkdir -p ./appdir/usr/share/metainfo/ ; cp ./appimage/edb.appdata.xml  ./appdir/usr/share/metainfo/
-    - make install DESTDIR=$(readlink -f appdir) ; find appdir/
+    - find ./appdir -type d
+    - find ./appdir -type f
+    - ls -l ./appdir
+    - readlink -f ./appdir
+    - make install DESTDIR=$(readlink -f ./appdir)
     - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
     - chmod a+x linuxdeployqt*.AppImage
     - unset QTDIR ; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
