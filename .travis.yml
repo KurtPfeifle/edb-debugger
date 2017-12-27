@@ -54,8 +54,8 @@ after_success:
     - pwd
     - cd ..
     - find . -type d
-    - cp ./src/images/edb.png ./build
-    - cp ./edb.desktop ./build
+    - find . -name "*.desktop"
+    - find . -name "edb.png"
     - # Generate AppImage
     - mkdir -p ./appdir/usr/share/applications/ ; cp ./appimage/edb.desktop ./appdir/usr/share/applications/
     - mkdir -p ./appdir/usr/share/icons/hicolor/512x512/apps/ ; cp ./appimage/edb.png  ./appdir/usr/share/icons/hicolor/512x512/apps/
@@ -76,8 +76,9 @@ after_success:
     - find ./squashfs-root -name appimagetool
     - ls -1d */
     - find . -type d
+    - find . -name "*.AppImage"
     #- rm ./appdir/AppRun ; cp appimage/AppRun appdir/ ; chmod a+x ./appdir/AppRun # Replace symlink with custom script
-    - PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool -v -u 'gh-releases-zsync|KurtPfeifle|edb-debugger|continuous|edb-debugger-*x86_64.AppImage.zsync' ./appdir/
+    - PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool -v -u 'gh-releases-zsync|KurtPfeifle|edb-debugger|continuous|edb-*x86_64.AppImage.zsync' ./appdir/
     - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
     - find . -name "edb*.AppImage"
     - mv ./edb*.AppImage ./edb-xperimental-x86_64.AppImage
