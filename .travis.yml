@@ -52,7 +52,9 @@ script:
 
 after_success:
     - cd ..
-    - find .
+    - find . -type d
+    - cp ./src/images/edb.png ./build
+    - cp ./edb.desktop ./build
       #- cp ./src/images/edb.png ./build
       #- cp ./edb.desktop ./build
       #- rm -rf build/src
