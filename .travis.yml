@@ -50,6 +50,7 @@ script:
 
 after_success:
     - cd ..
+    - find . -type d
     - cp ./src/images/edb.png ./build
     - cp ./edb.desktop ./build
     - find .
