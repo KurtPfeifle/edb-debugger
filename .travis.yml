@@ -63,14 +63,17 @@ after_success:
     - find ./appdir -type d
     - find ./appdir -type f
     - ls -l ./appdir
-    - readlink -f ./appdir
-    - make install DESTDIR=$(readlink -f ./appdir)
+    - cd ./build
+    - readlink -f ../appdir
+    - make install DESTDIR=$(readlink -f ../appdir)
+    - cd ..
     - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
     - chmod a+x linuxdeployqt*.AppImage
     - unset QTDIR ; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
     - export VERSION=$(git rev-parse --short HEAD)-$CC
     - ./linuxdeployqt*.AppImage ./appdir/usr/share/applications/imagemagick.desktop -bundle-non-qt-libs
     - ./linuxdeployqt*.AppImage --appimage-extract
+    - find ./squashfs-root -name appimagetool
     - ls -1d */
     - find . -type d
     #- rm ./appdir/AppRun ; cp appimage/AppRun appdir/ ; chmod a+x ./appdir/AppRun # Replace symlink with custom script
