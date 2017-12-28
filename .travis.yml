@@ -83,22 +83,22 @@ after_success:
     - pwd
     - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
     - find . -name "edb*.AppImage"
-    - mv ./edb*.AppImage ./edb-xperimental-x86_64.AppImage
-    - cp ./edb-xperimental{,-$(git rev-parse --short HEAD)}-x86_64.AppImage
-    - sha512sum ./edb-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage > ./edb-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage.sha512
-    - sha512sum ./edb-xperimental-x86_64.AppImage                               > ./edb-xperimental-x86_64.AppImage.sha512
+    - mv ./edb*.AppImage ./edb-qt$QT_BASE-xperimental-x86_64.AppImage
+    - cp ./edb-qt$QT_BASE-xperimental{,-$(git rev-parse --short HEAD)}-x86_64.AppImage
+    - sha512sum ./edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage > ./edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage.sha512
+    - sha512sum ./edb-qt$QT_BASE-xperimental-x86_64.AppImage                               > ./edb-qt$QT_BASE-xperimental-x86_64.AppImage.sha512
     - find . -name "*.AppImage*"
     - #if [ "$TRAVIS_BRANCH" == "TRAVIS_TAG" ] ; then
     - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-    - bash upload.sh edb-xperimental-x86_64.AppImage
-    - bash upload.sh edb-xperimental-x86_64.AppImage.sha512
-    - bash upload.sh edb-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage
-    - bash upload.sh edb-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage.sha512
-    - bash upload.sh edb-$(git rev-parse --short HEAD)-gcc-x86_64.AppImage.zsync
+    - bash upload.sh edb-qt$QT_BASE-xperimental-x86_64.AppImage
+    - bash upload.sh edb-qt$QT_BASE-xperimental-x86_64.AppImage.sha512
+    - bash upload.sh edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage
+    - bash upload.sh edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage.sha512
+    - bash upload.sh edb-qt$QT_BASE-$(git rev-parse --short HEAD)-gcc-x86_64.AppImage.zsync
     - #; fi
     - #if [ "$TRAVIS_BRANCH" != "TRAVIS_TAG" ] ; then
-    - curl --upload-file ./edb-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage  https://transfer.sh/edb-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage
-    - curl --upload-file ./edb-xperimental-x86_64.AppImage                                https://transfer.sh/edb-xperimental-x86_64.AppImage
+    - curl --upload-file ./edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage  https://transfer.sh/edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage
+    - curl --upload-file ./edb-qt$QT_BASE-xperimental-x86_64.AppImage                                https://transfer.sh/edb-qt$QT_BASE-xperimental-x86_64.AppImage
     - #; fi
     - find . -name "edb-*.AppImage*"
 
