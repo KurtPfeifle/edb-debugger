@@ -57,9 +57,9 @@ after_success:
     - find . -name "*.desktop"
     - find . -name "edb.png"
     - # Generate AppImage
-    - mkdir -p ./appdir/usr/local/share/applications/ ; cp ./appimage/edb.desktop ./appdir/usr/local/share/applications/
-    - mkdir -p ./appdir/usr/local/share/icons/hicolor/512x512/apps/ ; cp ./appimage/edb.png  ./appdir/usr/local/share/icons/hicolor/512x512/apps/
-    - mkdir -p ./appdir/usr/local/share/metainfo/ ; cp ./appimage/edb.appdata.xml  ./appdir/usr/local/share/metainfo/
+    - mkdir -p ./appdir/usr/local/share/applications/ ; cp ./appimage/edb.desktop ./appdir/usr/local/share/applications/ ; cp ./appimage/edb.desktop ./appdir/
+    - mkdir -p ./appdir/usr/local/share/icons/hicolor/512x512/apps/ ; cp ./appimage/edb.png ./appdir/usr/local/share/icons/hicolor/512x512/apps/ ; cp ./appimage/edb.png ./appdir/
+    - mkdir -p ./appdir/usr/local/share/metainfo/ ; cp ./appimage/edb.appdata.xml ./appdir/usr/local/share/metainfo/ ; cp ./appimage/edb.appdata.xml ./appdir/
     - find ./appdir -type d
     - find ./appdir -type f
     - ls -l ./appdir
