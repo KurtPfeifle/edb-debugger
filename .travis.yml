@@ -82,8 +82,9 @@ after_success:
     - PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool -v -u 'gh-releases-zsync|KurtPfeifle|edb-debugger|continuous|edb-*x86_64.AppImage.zsync' ./appdir/
     - pwd
     - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
-    - find . -name "edb*.AppImage"
-    - mv ./edb*.AppImage ./edb-qt$QT_BASE-xperimental-x86_64.AppImage
+    - find . -name "edb*.AppImage*"
+    - mv ./edb*.AppImage       ./edb-qt$QT_BASE-xperimental-x86_64.AppImage
+    - mv ./edb*.AppImage.zsync ./edb-qt$QT_BASE-xperimental-x86_64.AppImage.zsync
     - cp ./edb-qt$QT_BASE-xperimental{,-$(git rev-parse --short HEAD)}-x86_64.AppImage
     - sha512sum ./edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage > ./edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage.sha512
     - sha512sum ./edb-qt$QT_BASE-xperimental-x86_64.AppImage                               > ./edb-qt$QT_BASE-xperimental-x86_64.AppImage.sha512
