@@ -88,7 +88,7 @@ after_success:
     - find . -type d
     - find . -name "*.AppImage"
     #- rm ./appdir/AppRun ; cp appimage/AppRun appdir/ ; chmod a+x ./appdir/AppRun # Replace symlink with custom script
-    - cd ./appdir ; ln -s ./usr/bin/edb ./AppRun ; cd -
+    #- cd ./appdir ; ln -s ./usr/bin/edb ./AppRun ; cd -                        # No longer needed
     - PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool -v -u 'gh-releases-zsync|KurtPfeifle|edb-debugger|continuous|edb-qt$QT_BASE*x86_64.AppImage.zsync' ./appdir/
     - pwd
     - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
@@ -96,22 +96,24 @@ after_success:
     - mv ./edb*.AppImage       ./edb-qt$QT_BASE-xperimental-x86_64.AppImage
     - mv ./edb*.AppImage.zsync ./edb-qt$QT_BASE-xperimental-x86_64.AppImage.zsync
     - cp ./edb-qt$QT_BASE-xperimental{,-$VERSION}-x86_64.AppImage
+    - cp ./edb-qt$QT_BASE-xperimental{,-$VERSION}-x86_64.AppImage.zsync
     - sha512sum ./edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage > ./edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage.sha512
-    - sha512sum ./edb-qt$QT_BASE-xperimental-x86_64.AppImage                               > ./edb-qt$QT_BASE-xperimental-x86_64.AppImage.sha512
+    - sha512sum ./edb-qt$QT_BASE-xperimental-x86_64.AppImage          > ./edb-qt$QT_BASE-xperimental-x86_64.AppImage.sha512
     - find . -name "*.AppImage*"
     - #if [ "$TRAVIS_BRANCH" == "TRAVIS_TAG" ] ; then
     - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
     - bash upload.sh edb-qt$QT_BASE-xperimental-x86_64.AppImage
     - bash upload.sh edb-qt$QT_BASE-xperimental-x86_64.AppImage.sha512
+    - bash upload.sh edb-qt$QT_BASE-xperimental-x86_64.AppImage.zsync
     - bash upload.sh edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage
     - bash upload.sh edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage.sha512
-    - bash upload.sh edb-qt$QT_BASE-$VERSION-gcc-x86_64.AppImage.zsync
+    - bash upload.sh edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage.zsync
     - #; fi
     - #if [ "$TRAVIS_BRANCH" != "TRAVIS_TAG" ] ; then
     - curl --upload-file ./edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage  https://transfer.sh/edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage
     - curl --upload-file ./edb-qt$QT_BASE-xperimental-x86_64.AppImage           https://transfer.sh/edb-qt$QT_BASE-xperimental-x86_64.AppImage
     - #; fi
-    - find . -name "edb-*.AppImage*"
+    - find . -name "*.AppImage*"
 
       #- cp ./src/images/edb.png ./build
       #- cp ./edb.desktop ./build
