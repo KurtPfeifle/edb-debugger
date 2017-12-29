@@ -82,7 +82,7 @@ after_success:
     - unset QTDIR ; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
     - export VERSION=$(git rev-parse --short HEAD)-$CC
     - ./linuxdeployqt*.AppImage ./appdir/usr/bin/edb -bundle-non-qt-libs -verbose=2
-    - ./linuxdeployqt*.AppImage --appimage-extract -verbose=2
+    - ./linuxdeployqt*.AppImage --appimage-extract                   # -verbose=2 # Pah! This prevented my extracting.
     - find ./squashfs-root -name appimagetool
     - ls -1d */
     - find . -type d
