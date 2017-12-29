@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>org.edb.debugger.desktop</id>
+	<metadata_license>MIT</metadata_license>
+	<project_license>GPL-2.0</project_license>
+	<name>edb debugger</name>
+	<summary>A cross-platform x86/x86-64 debugger</summary>
+	<description>
+		<p>edb is a cross platform x86/x86-64 debugger. It was inspired by Ollydbg, but aims to function on x86 and x86-64 as well as multiple OS's.</p>
+		<p>Linux is the only officially supported platform at the moment, but FreeBSD, OpenBSD, OSX and Windows ports are underway with varying degrees of functionality.</p>
+	</description>
+	<x-launchable type="desktop-id">edb.desktop</x-launchable>
+	<url type="homepage">https://github.com/eteran/edb-debugger</url>
+	<url type="help">https://github.com/eteran/edb-debugger/wiki</url>
+	<url type="bugtracker">https://github.com/eteran/edb-debugger/issues</url>
+	<screenshots>
+		<screenshot type="default">
+			<image>https://raw.githubusercontent.com/eteran/edb-debugger/master/doc/img/edb_interface-2016.png</image>
+		</screenshot>
+	</screenshots>
+	<provides>
+		<binary>edb</binary>
+	</provides>
+</component>
