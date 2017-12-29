@@ -69,7 +69,7 @@ after_success:
     - # Generate AppImage
     - mkdir -p ./appdir/usr/share/applications/ ; cp ./appimage/edb.desktop ./appdir/usr/share/applications/ ; cp ./appimage/edb.desktop ./appdir/
     - mkdir -p ./appdir/usr/share/icons/hicolor/512x512/apps/ ; cp ./appimage/edb.png ./appdir/usr/share/icons/hicolor/512x512/apps/ ; cp ./appimage/edb.png ./appdir/
-    - mkdir -p ./appdir/usr/share/metainfo/ ; cp ./appimage/edb.appdata.xml ./appdir/usr/share/metainfo/ ; cp ./appimage/edb.appdata.xml ./appdir/ ; cp ./appimage/edb.appdata.xml ./appdir/usr/share/metainfo/
+    - mkdir -p ./appdir/usr/share/metainfo/ ; cp ./appimage/edb.appdata-kp.xml ./appdir/usr/share/metainfo/ ; cp ./appimage/edb.appdata-kp.xml ./appdir/
     - find ./appdir -type d
     - find ./appdir -type f
     - ls -l ./appdir
@@ -81,15 +81,15 @@ after_success:
     - chmod a+x linuxdeployqt*.AppImage
     - unset QTDIR ; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
     - export VERSION=$(git rev-parse --short HEAD)-$CC
-    - ./linuxdeployqt*.AppImage ./appdir/usr/bin/edb -bundle-non-qt-libs -verbose=2
+    - ./linuxdeployqt*.AppImage ./appdir/usr/bin/edb -bundle-non-qt-libs -appimage -verbose=2
+    - find . -name "*.AppImage"
+    - find . -name "*.AppImage" -ls
     - ./linuxdeployqt*.AppImage --appimage-extract                   # -verbose=2 # Pah! This prevented my extracting.
     - find ./squashfs-root -name appimagetool
     - ls -1d */
     - find . -type d
     - find . -name "*.AppImage"
-    #- rm ./appdir/AppRun ; cp appimage/AppRun appdir/ ; chmod a+x ./appdir/AppRun # Replace symlink with custom script
-    #- cd ./appdir ; ln -s ./usr/bin/edb ./AppRun ; cd -                        # No longer needed
-    - PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool -v -u 'gh-releases-zsync|KurtPfeifle|edb-debugger|continuous|edb-qt$QT_BASE*x86_64.AppImage.zsync' ./appdir/
+    - PATH=./squashfs-root/usr/bin:$PATH ./squashfs-root/usr/bin/appimagetool -v -u 'gh-releases-zsync|KurtPfeifle|edb-debugger|continuous|edb-qt$QT_BASE*x86_64.AppImage.zsync' ./appdir/ ./edb-made-by-appimagetool-qt$QT_BASE-$VERSION-x86_64.AppImage
     - pwd
     - find ./appdir -executable -type f -exec ldd {} \; | grep " => /usr" | cut -d " " -f 2-3 | sort | uniq
     - find . -name "edb*.AppImage*"
@@ -103,15 +103,16 @@ after_success:
     - #if [ "$TRAVIS_BRANCH" == "TRAVIS_TAG" ] ; then
     - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
     - bash upload.sh edb-qt$QT_BASE-xperimental-x86_64.AppImage
-    - bash upload.sh edb-qt$QT_BASE-xperimental-x86_64.AppImage.sha512
+    #- bash upload.sh edb-qt$QT_BASE-xperimental-x86_64.AppImage.sha512
     - bash upload.sh edb-qt$QT_BASE-xperimental-x86_64.AppImage.zsync
-    - bash upload.sh edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage
-    - bash upload.sh edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage.sha512
-    - bash upload.sh edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage.zsync
+    #- bash upload.sh edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage
+    #- bash upload.sh edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage.sha512
+    #- bash upload.sh edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage.zsync
     - #; fi
     - #if [ "$TRAVIS_BRANCH" != "TRAVIS_TAG" ] ; then
-    - curl --upload-file ./edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage  https://transfer.sh/edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage
-    - curl --upload-file ./edb-qt$QT_BASE-xperimental-x86_64.AppImage           https://transfer.sh/edb-qt$QT_BASE-xperimental-x86_64.AppImage
+    #- curl --upload-file ./edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage  https://transfer.sh/edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage
+    - curl --upload-file ./edb-qt$QT_BASE-xperimental-x86_64.AppImage            https://transfer.sh/edb-qt$QT_BASE-xperimental-x86_64.AppImage
+    - curl --upload-file ./edb-made-by-appimagetool-qt$QT_BASE-$VERSION-x86_64.AppImage https://transfer.sh/edb-made-by-appimagetool-qt$QT_BASE-$VERSION-x86_64.AppImage
     - #; fi
     - find . -name "*DebuggerCore*"
     - find . -iname "*debuggercore*"
@@ -120,18 +121,7 @@ after_success:
     - ls -l *.AppImage*
     - ls -lh *.AppImage*
 
-      #- cp ./src/images/edb.png ./build
-      #- cp ./edb.desktop ./build
       #- rm -rf build/src
-      #- wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
-      #- chmod a+x linuxdeployqt-continuous-x86_64.AppImage
-      #- unset LD_LIBRARY_PATH
-      #- ./linuxdeployqt-continuous-x86_64.AppImage ./build/edb -appimage -verbose=2
-      #- find . -name "*.AppImage*"
-      #- ls edb*.AppImage*
-      #- mv $(ls edb*.AppImage) ./build/edb-qt$QT_BASE-continuous-git.$VERSION-x86_64.AppImage
-      #- curl --upload-file $(ls ./build/edb*.AppImage) https://transfer.sh/edb-qt$QT_BASE-continuous-git.$VERSION-x86_64.AppImage # Replace with your deployment mechanism
-      #- wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
       #- bash upload.sh ./build/edb-qt$QT_BASE-continuous-git.$VERSION-x86_64.AppImage  # Needs Travis token of @eteran!
       #- bash upload.sh ./build/edb-qt$QT_BASE-continuous-git.$VERSION-x86_64.AppImage.zsync
 
