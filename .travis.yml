@@ -32,7 +32,7 @@ before_install:
     - if [ "$QT_BASE" = "55" ] ; then sudo add-apt-repository ppa:beineri/opt-qt551-trusty -y ; fi
     - if [ "$QT_BASE" = "56" ] ; then sudo add-apt-repository ppa:beineri/opt-qt562-trusty -y ; fi
     - if [ "$QT_BASE" = "57" ] ; then sudo add-apt-repository ppa:beineri/opt-qt571-trusty -y ; fi
-    - if [ "$QT_BASE" = "58" ] ; then sudo add-apt-repository ppa:beineri/opt-qt58-trusty -y ; fi
+    - if [ "$QT_BASE" = "58" ] ; then sudo add-apt-repository ppa:beineri/opt-qt58-trusty  -y ; fi
     - if [ "$QT_BASE" = "59" ] ; then sudo add-apt-repository ppa:beineri/opt-qt593-trusty -y ; fi
     - sudo add-apt-repository ppa:ximion/packagekit -y
     - sudo apt-get update -qq
@@ -80,8 +80,8 @@ after_success:
     - chmod a+x linuxdeployqt*.AppImage
     - unset QTDIR ; unset QT_PLUGIN_PATH ; unset LD_LIBRARY_PATH
     - export VERSION=$(git rev-parse --short HEAD)-$CC
-    - ./linuxdeployqt*.AppImage ./appdir/usr/local/bin/edb -bundle-non-qt-libs
-    - ./linuxdeployqt*.AppImage --appimage-extract
+    - ./linuxdeployqt*.AppImage ./appdir/usr/local/bin/edb -bundle-non-qt-libs -verbose=2
+    - ./linuxdeployqt*.AppImage --appimage-extract -verbose=2
     - find ./squashfs-root -name appimagetool
     - ls -1d */
     - find . -type d
@@ -94,21 +94,21 @@ after_success:
     - find . -name "edb*.AppImage*"
     - mv ./edb*.AppImage       ./edb-qt$QT_BASE-xperimental-x86_64.AppImage
     - mv ./edb*.AppImage.zsync ./edb-qt$QT_BASE-xperimental-x86_64.AppImage.zsync
-    - cp ./edb-qt$QT_BASE-xperimental{,-$(git rev-parse --short HEAD)}-x86_64.AppImage
-    - sha512sum ./edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage > ./edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage.sha512
+    - cp ./edb-qt$QT_BASE-xperimental{,-$VERSION}-x86_64.AppImage
+    - sha512sum ./edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage > ./edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage.sha512
     - sha512sum ./edb-qt$QT_BASE-xperimental-x86_64.AppImage                               > ./edb-qt$QT_BASE-xperimental-x86_64.AppImage.sha512
     - find . -name "*.AppImage*"
     - #if [ "$TRAVIS_BRANCH" == "TRAVIS_TAG" ] ; then
     - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
     - bash upload.sh edb-qt$QT_BASE-xperimental-x86_64.AppImage
     - bash upload.sh edb-qt$QT_BASE-xperimental-x86_64.AppImage.sha512
-    - bash upload.sh edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage
-    - bash upload.sh edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage.sha512
-    - bash upload.sh edb-qt$QT_BASE-$(git rev-parse --short HEAD)-gcc-x86_64.AppImage.zsync
+    - bash upload.sh edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage
+    - bash upload.sh edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage.sha512
+    - bash upload.sh edb-qt$QT_BASE-$VERSION-gcc-x86_64.AppImage.zsync
     - #; fi
     - #if [ "$TRAVIS_BRANCH" != "TRAVIS_TAG" ] ; then
-    - curl --upload-file ./edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage  https://transfer.sh/edb-qt$QT_BASE-xperimental-$(git rev-parse --short HEAD)-x86_64.AppImage
-    - curl --upload-file ./edb-qt$QT_BASE-xperimental-x86_64.AppImage                                https://transfer.sh/edb-qt$QT_BASE-xperimental-x86_64.AppImage
+    - curl --upload-file ./edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage  https://transfer.sh/edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage
+    - curl --upload-file ./edb-qt$QT_BASE-xperimental-x86_64.AppImage           https://transfer.sh/edb-qt$QT_BASE-xperimental-x86_64.AppImage
     - #; fi
     - find . -name "edb-*.AppImage*"
 
@@ -121,11 +121,11 @@ after_success:
       #- ./linuxdeployqt-continuous-x86_64.AppImage ./build/edb -appimage -verbose=2
       #- find . -name "*.AppImage*"
       #- ls edb*.AppImage*
-      #- mv $(ls edb*.AppImage) ./build/edb-qt$QT_BASE-continuous-git.$(git rev-parse --short HEAD)-x86_64.AppImage
-      #- curl --upload-file $(ls ./build/edb*.AppImage) https://transfer.sh/edb-qt$QT_BASE-continuous-git.$(git rev-parse --short HEAD)-x86_64.AppImage # Replace with your deployment mechanism
+      #- mv $(ls edb*.AppImage) ./build/edb-qt$QT_BASE-continuous-git.$VERSION-x86_64.AppImage
+      #- curl --upload-file $(ls ./build/edb*.AppImage) https://transfer.sh/edb-qt$QT_BASE-continuous-git.$VERSION-x86_64.AppImage # Replace with your deployment mechanism
       #- wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
-      #- bash upload.sh ./build/edb-qt$QT_BASE-continuous-git.$(git rev-parse --short HEAD)-x86_64.AppImage  # Needs Travis token of @eteran!
-      #- bash upload.sh ./build/edb-qt$QT_BASE-continuous-git.$(git rev-parse --short HEAD)-x86_64.AppImage.zsync
+      #- bash upload.sh ./build/edb-qt$QT_BASE-continuous-git.$VERSION-x86_64.AppImage  # Needs Travis token of @eteran!
+      #- bash upload.sh ./build/edb-qt$QT_BASE-continuous-git.$VERSION-x86_64.AppImage.zsync
 
 
 branches:
