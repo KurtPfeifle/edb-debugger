@@ -113,7 +113,12 @@ after_success:
     - curl --upload-file ./edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage  https://transfer.sh/edb-qt$QT_BASE-xperimental-$VERSION-x86_64.AppImage
     - curl --upload-file ./edb-qt$QT_BASE-xperimental-x86_64.AppImage           https://transfer.sh/edb-qt$QT_BASE-xperimental-x86_64.AppImage
     - #; fi
-    - find . -name "*.AppImage*"
+    - find . -name "*DebuggerCore*"
+    - find . -iname "*debuggercore*"
+    - find . -name libDebuggerCore.so
+    - find . -name "*.AppImage*" -ls
+    - ls -l *.AppImage*
+    - ls -lh *.AppImage*
 
       #- cp ./src/images/edb.png ./build
       #- cp ./edb.desktop ./build
